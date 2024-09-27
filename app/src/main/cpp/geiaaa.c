@@ -4,6 +4,7 @@
 #include <jni.h>
 #include <string.h>
 #include <omp.h>
+#include "geiaaa.h"
 
 #define UPTO 10000000
 
