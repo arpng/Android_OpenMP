@@ -4,7 +4,7 @@
 #include <jni.h>
 #include <string.h>
 #include <omp.h>
-#include "geiaaa.h"
+#include "ompprimes.h"
 
 #define UPTO 10000000
 
@@ -77,15 +77,8 @@ void openmp_primes(long int n) {
 JNIEXPORT jstring JNICALL
 Java_com_example_idklol_MainActivity_stringFromJNIC(JNIEnv *env, jobject thiz) {
 
-//    int a = omp_in_parallel();
-//    char buffer[20];
-//
-//    sprintf(buffer, "%d", a);
-
     double start, finish, start1, finish1;
     char buffer[250];
-
-    //printf("Serial and parallel prime number calculations:\n\n");
 
     /* Time the following to compare performance
      */
@@ -97,13 +90,11 @@ Java_com_example_idklol_MainActivity_stringFromJNIC(JNIEnv *env, jobject thiz) {
     openmp_primes(UPTO);        /* time it */
     finish1 = omp_get_wtime();
 
-    printf("[serial] count = %ld, last = %ld (time = %f)\n", count, lastprime, (finish - start));
-    printf("[openmp] count = %ld, last = %ld (time = %f)\n", count, lastprime, (finish1 - start1));
 
     sprintf(buffer, "Serial and parallel prime number calculations:\n\n"
             "[serial] count = %ld, last = %ld (time = %f)\n"
             "[openmp] count = %ld, last = %ld (time = %f)\n",
-    count, lastprime, (finish - start), count, lastprime, (finish1 - start1));
+            count, lastprime, (finish - start), count, lastprime, (finish1 - start1));
 
     return (*env)->NewStringUTF(env, buffer);
 }
