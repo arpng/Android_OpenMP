@@ -1,10 +1,8 @@
 //
 // Created by aris on 20-Sep-24.
 //
-#include <jni.h>
-#include <string.h>
-#include <omp.h>
-#include "ompprimes.h"
+
+#include "omp_primes.h"
 
 #define UPTO 10000000
 
@@ -89,7 +87,6 @@ Java_com_example_idklol_MainActivity_stringFromJNIC(JNIEnv *env, jobject thiz) {
     start1 = omp_get_wtime();
     openmp_primes(UPTO);        /* time it */
     finish1 = omp_get_wtime();
-
 
     sprintf(buffer, "Serial and parallel prime number calculations:\n\n"
             "[serial] count = %ld, last = %ld (time = %f)\n"

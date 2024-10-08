@@ -3,6 +3,7 @@ package com.example.idklol;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.idklol.databinding.ActivityMainBinding;
@@ -20,12 +21,37 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+//        binding = ActivityMainBinding.inflate(getLayoutInflater());
+//        setContentView(binding.getRoot());
+//
+//        // Example of a call to a native method
+//        TextView tv = binding.sampleText;
+////        tv.setText(stringFromJNIC());
+//        tv.setText(stringFromJNICLib());
 
-        // Example of a call to a native method
-        TextView tv = binding.sampleText;
-        tv.setText(stringFromJNIC());
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        // Create the first TextView
+        TextView textView1 = new TextView(this);
+        textView1.setText(stringFromJNIC());
+        textView1.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        // Create the second TextView
+        TextView textView2 = new TextView(this);
+        textView2.setText(stringFromJNICLib());
+        textView2.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        // Add TextViews to the LinearLayout
+        linearLayout.addView(textView1);
+        linearLayout.addView(textView2);
+
+        // Set the layout as the content view
+        setContentView(linearLayout);
 
     }
 
@@ -34,4 +60,5 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNIC();
+    public native String stringFromJNICLib();
 }
