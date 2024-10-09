@@ -17,13 +17,13 @@ Java_com_example_idklol_MainActivity_stringFromJNICLib(JNIEnv *env, jobject thiz
 
     /* Time the following to compare performance
      */
-    start = omp_get_wtime();
-    serial_primes(UPTO, &count, &lastprime);        /* time it */
-    finish = omp_get_wtime();
-
-    start1 = omp_get_wtime();
-    openmp_primes(UPTO, &count, &lastprime);        /* time it */
-    finish1 = omp_get_wtime();
+//    start = omp_get_wtime();
+//    serial_primes(UPTO, &count, &lastprime);        /* time it */
+//    finish = omp_get_wtime();
+//
+//    start1 = omp_get_wtime();
+//    openmp_primes(UPTO, &count, &lastprime);        /* time it */
+//    finish1 = omp_get_wtime();
 
 
     sprintf(buffer, "Serial and parallel prime number calculations using ext lib:\n\n"

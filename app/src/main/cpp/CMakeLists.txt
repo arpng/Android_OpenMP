@@ -28,13 +28,14 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
         omp_primes.c
         omp_primes_using_lib.c
+        omp_primes_gpu.c
 )
 
 set(CMAKE_PREFIX_PATH "C:/Users/aris3/Desktop/my_lib")#??????????? possibly required in cmakepresets.json
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)           #????????????
 
 find_package(OpenMP REQUIRED)
-find_package(OmpPrimesLib REQUIRED)
+#find_package(OmpPrimesLib REQUIRED)
 
 
 
@@ -46,5 +47,5 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         android
         log
         OpenMP::OpenMP_C
-        OmpPrimesLib::OmpPrimesLib
+#        OmpPrimesLib::OmpPrimesLib
 )

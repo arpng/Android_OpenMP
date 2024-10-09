@@ -41,14 +41,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the second TextView
         TextView textView2 = new TextView(this);
-        textView2.setText(stringFromJNICLib());
+//        textView2.setText(stringFromJNICLib());
         textView2.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        // Create the first TextView
+        TextView textView3 = new TextView(this);
+//        textView3.setText(stringFromJNICGPU());
+        textView3.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
         // Add TextViews to the LinearLayout
         linearLayout.addView(textView1);
         linearLayout.addView(textView2);
+        linearLayout.addView(textView3);
 
         // Set the layout as the content view
         setContentView(linearLayout);
@@ -60,5 +68,6 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNIC();
-    public native String stringFromJNICLib();
+//    public native String stringFromJNICLib();
+//    public native String stringFromJNICGPU();
 }
