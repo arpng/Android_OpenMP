@@ -13,7 +13,21 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+//        ndk {                                         Optional
+//            abiFilters += "arm64-v8a"
+//        }
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+//        Needed for OpenCL
+        externalNativeBuild {
+            cmake {
+                arguments += listOf(
+                    "-DOpenCL_LIBRARY=C:/Qualcomm/Adreno_OpenCL_SDK.Core.2.1.Windows-x64/opencl-sdk/libs/Android/libOpenCL.so", // set to location of libOpenCL.so
+                    "-DOpenCL_INCLUDE_DIR=C:/Qualcomm/Adreno_OpenCL_SDK.Core.2.1.Windows-x64/opencl-sdk/inc", // set to location of CL directory containing OpenCL headers
+                    "-DANDROID_ABI=arm64-v8a")
+            }
+        }
     }
 
     buildTypes {
@@ -37,6 +51,11 @@ android {
     }
     buildFeatures {
         viewBinding = true
+    }
+
+    // use the OpenCL library on-device
+    packaging{
+        jniLibs.excludes += "lib/arm64-v8a/libOpenCL.so"
     }
 }
 

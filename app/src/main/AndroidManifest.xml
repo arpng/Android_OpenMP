@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Idklol"
         tools:targetApi="31">
+
+<!--        Needed for OpenCL       -->
+        <uses-native-library
+            android:name="libOpenCL.so"
+            android:required="true" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -22,5 +28,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.idklol.databinding.ActivityMainBinding;
+//import com.example.idklol.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("idklol");
     }
 
-    private ActivityMainBinding binding;
+//    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the second TextView
         TextView textView2 = new TextView(this);
-//        textView2.setText(stringFromJNICLib());
+         textView2.setText(stringFromJNIOclTest());
         textView2.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -70,4 +70,5 @@ public class MainActivity extends AppCompatActivity {
     public native String stringFromJNIC();
 //    public native String stringFromJNICLib();
 //    public native String stringFromJNICGPU();
+    public native String stringFromJNIOclTest();
 }
