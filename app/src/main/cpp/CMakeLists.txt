@@ -33,9 +33,10 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 )
 
 set(CMAKE_PREFIX_PATH "C:/Users/aris3/Desktop/my_lib")#??????????? possibly required in cmakepresets.json
-set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)           #????????????
+#set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)           #????????????
 
 find_package(OpenMP REQUIRED)
+find_package(OmpPrimesLib REQUIRED)
 find_package(OpenCL REQUIRED)
 
 # Specifies libraries CMake should link to your target library. You
@@ -47,5 +48,5 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
         log
         OpenMP::OpenMP_C
         OpenCL::OpenCL
-
+        OmpPrimesLib::OmpPrimesLib
 )
