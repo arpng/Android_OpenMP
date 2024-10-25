@@ -39,6 +39,11 @@ find_package(OpenMP REQUIRED)
 find_package(OmpPrimesLib REQUIRED)
 find_package(OpenCL REQUIRED)
 
+set_target_properties(OmpPrimesLib::OmpPrimesLib PROPERTIES
+        IMPORTED_LOCATION_DEBUG "C:/Users/aris3/Desktop/my_lib/lib/libOmpPrimesLib.a"
+)
+
+
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this
 # build script, prebuilt third-party libraries, or Android system libraries.

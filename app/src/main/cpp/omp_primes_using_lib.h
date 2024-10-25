@@ -8,7 +8,7 @@
 #include <jni.h>
 #include <string.h>
 #include <stdio.h>
-#include <ompprimeslib.h>
+#include <omp_primes_lib.h>
 
 JNIEXPORT jstring JNICALL
 Java_com_example_idklol_MainActivity_stringFromJNICLib(JNIEnv *env, jobject thiz);
