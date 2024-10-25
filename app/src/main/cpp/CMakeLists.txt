@@ -32,13 +32,15 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         ocl_test.c
 )
 
-set(CMAKE_PREFIX_PATH "C:/Users/aris3/Desktop/my_lib")#??????????? possibly required in cmakepresets.json
-#set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)           #????????????
+
 
 find_package(OpenMP REQUIRED)
 find_package(OmpPrimesLib REQUIRED)
 find_package(OpenCL REQUIRED)
 
+                    #########           NO IDEA WHAT IS GOING ON HERE??????????         ################
+set(CMAKE_PREFIX_PATH "C:/Users/aris3/Desktop/my_lib")#??????????? possibly required in cmakepresets.json
+#set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE BOTH)           #????????????
 set_target_properties(OmpPrimesLib::OmpPrimesLib PROPERTIES
         IMPORTED_LOCATION_DEBUG "C:/Users/aris3/Desktop/my_lib/lib/libOmpPrimesLib.a"
 )
