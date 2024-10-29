@@ -4,32 +4,23 @@
 
 #include "omp_primes_using_lib.h"
 
-#define UPTO 10000000
-
 JNIEXPORT jstring JNICALL
 Java_com_example_idklol_MainActivity_stringFromJNICLib(JNIEnv *env, jobject thiz) {
 
-//    long int count, count1,      /* number of primes */
-//    lastprime, lastprime1 = 0;           /* the last prime found */
-
-    long int count = 0, count1 = 0, lastprime = 0, lastprime1 = 0;
-
-
+    long int count, count1,      /* number of primes */
+    lastprime, lastprime1;       /* the last prime found */
     double start, finish, start1, finish1;
-    char buffer[250];
+    char* buffer = (char*) malloc(sizeof(char) * 250);
 
     /* Time the following to compare performance
      */
     start = omp_get_wtime();
-    serial_primes(UPTO, &count, &lastprime);        /* time it */
+    serial_primes_statlib(UPTO, &count, &lastprime);        /* time it */
     finish = omp_get_wtime();
 
-
-
     start1 = omp_get_wtime();
-    openmp_primes(UPTO, &count1, &lastprime1);        /* time it */
+    openmp_primes_statlib(UPTO, &count1, &lastprime1/*, buffer */);        /* time it */
     finish1 = omp_get_wtime();
-
 
     sprintf(buffer, "Serial and parallel prime number calculations using ext lib:\n\n"
                     "[serial] count = %ld, last = %ld (time = %f)\n"

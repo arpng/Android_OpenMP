@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNIC();
+    public native String stringFromJNIOclTest();
     public native String stringFromJNICLib();
 //    public native String stringFromJNICGPU();
-    public native String stringFromJNIOclTest();
+
 }
