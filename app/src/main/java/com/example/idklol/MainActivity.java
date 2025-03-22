@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 //import com.example.idklol.databinding.ActivityMainBinding;
+import com.example.nativelib.NativeLib;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the second TextView
         TextView textView2 = new TextView(this);
-         textView2.setText(stringFromJNIOclTest());
+        textView2.setText(stringFromJNIOclTest());
         textView2.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
-        // Create the first TextView
+        // Create the third TextView
         TextView textView3 = new TextView(this);
 //        textView3.setText(stringFromJNICGPU());
         textView3.setText(stringFromJNICLib());
@@ -54,10 +55,19 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
+        // Create the fourth TextView
+        TextView textView4 = new TextView(this);
+        NativeLib obj = new NativeLib();
+        textView4.setText(obj.stringFromJNILib());
+        textView4.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
         // Add TextViews to the LinearLayout
         linearLayout.addView(textView1);
         linearLayout.addView(textView2);
         linearLayout.addView(textView3);
+        linearLayout.addView(textView4);
 
         // Set the layout as the content view
         setContentView(linearLayout);
