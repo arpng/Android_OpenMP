@@ -34,6 +34,15 @@ Java_com_example_idklol_MainActivity_stringFromJNIOclTest(JNIEnv *env, jobject t
     clGetPlatformIDs(1, &platform, NULL);
     clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 1, &device, NULL);
 
+    // Print device name, should be qualcomm adreno
+    char device_name[25];
+    char device_name2[40];
+    clGetDeviceInfo(device, CL_DEVICE_NAME, sizeof(device_name), device_name, NULL);
+//    printf("Device name: %s\n", device_name);
+    __android_log_print(ANDROID_LOG_INFO, "ANDROID_LOG_TAG", "Device name: %s\n", device_name);
+    sprintf(device_name2, "Device name: %s\n", device_name);
+    strcat(buffer, device_name2);
+
     // Create an OpenCL context and command queue
     cl_context context = clCreateContext(NULL, 1, &device, NULL, NULL, NULL);
     cl_command_queue queue = clCreateCommandQueue(context, device, 0, NULL);

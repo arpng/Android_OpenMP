@@ -10,6 +10,7 @@
 #include <string.h>
 #include <CL/cl.h>
 #include <jni.h>
+#include <android/log.h>
 
 #define VECTOR_SIZE 5
 
