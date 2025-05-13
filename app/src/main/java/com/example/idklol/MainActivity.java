@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //        // Example of a call to a native method
 //        TextView tv = binding.sampleText;
-////        tv.setText(stringFromJNIC());
+//        tv.setText(stringFromJNIC());
 //        tv.setText(stringFromJNICLib());
 
         LinearLayout linearLayout = new LinearLayout(this);
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the first TextView
         TextView textView1 = new TextView(this);
-//        textView1.setText(stringFromJNIC());
+        textView1.setText(stringFromJNIC());
         textView1.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -63,11 +63,19 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
+        // Create the fifth TextView
+        TextView textView5 = new TextView(this);
+//        textView5.setText(stringFromJNIPrimesOclTest());
+        textView5.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
         // Add TextViews to the LinearLayout
         linearLayout.addView(textView1);
         linearLayout.addView(textView2);
         linearLayout.addView(textView3);
         linearLayout.addView(textView4);
+        linearLayout.addView(textView5);
 
         // Set the layout as the content view
         setContentView(linearLayout);
@@ -80,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public native String stringFromJNIC();
     public native String stringFromJNIOclTest();
+    public native String stringFromJNIPrimesOclTest();
     public native String stringFromJNICLib();
 //    public native String stringFromJNICGPU();
 
