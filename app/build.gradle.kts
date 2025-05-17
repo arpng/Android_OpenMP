@@ -58,7 +58,7 @@ android {
         jniLibs.excludes += "lib/arm64-v8a/libOpenCL.so"
     }
     buildToolsVersion = "35.0.0"
-    ndkVersion = "27.0.12077973"
+    ndkVersion = "27.2.12479018"//"27.0.12077973"
 }
 
 dependencies {

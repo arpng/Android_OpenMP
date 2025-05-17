@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the third TextView
         TextView textView3 = new TextView(this);
 //        textView3.setText(stringFromJNICGPU());
-//        textView3.setText(stringFromJNICLib());
+        textView3.setText(stringFromJNICLib());
         textView3.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the fourth TextView
         TextView textView4 = new TextView(this);
         NativeLib obj = new NativeLib();
-//        textView4.setText(obj.stringFromJNILib());
+        textView4.setText(obj.stringFromJNILib());
         textView4.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
