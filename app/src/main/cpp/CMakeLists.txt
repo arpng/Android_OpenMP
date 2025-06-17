@@ -31,6 +31,7 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         omp_primes_gpu.c
         ocl_test.c
         primes_ocl_test.c
+        omp_sum.c
 )
 
 
