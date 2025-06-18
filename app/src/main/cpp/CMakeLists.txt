@@ -32,6 +32,8 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         ocl_test.c
         primes_ocl_test.c
         omp_sum.c
+        omp_vector_add.c
+        omp_pi.c
 )
 
 

@@ -71,12 +71,21 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
 
+        // Create the sixth TextView
+        TextView textView6 = new TextView(this);
+//        textView6.setText(stringFromJNIOmpVectorAdd());
+        textView6.setText(stringFromJNIOmpPi());
+        textView6.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT));
+
         // Add TextViews to the LinearLayout
         linearLayout.addView(textView1);
         linearLayout.addView(textView2);
         linearLayout.addView(textView3);
         linearLayout.addView(textView4);
         linearLayout.addView(textView5);
+        linearLayout.addView(textView6);
 
         // Set the layout as the content view
         setContentView(linearLayout);
@@ -93,5 +102,7 @@ public class MainActivity extends AppCompatActivity {
     public native String stringFromJNICLib();
 //    public native String stringFromJNICGPU();
     public native String stringFromJNIOmpSum();
+    public native String stringFromJNIOmpVectorAdd();
+    public native String stringFromJNIOmpPi();
 
 }

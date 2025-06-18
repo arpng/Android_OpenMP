@@ -77,6 +77,7 @@ Java_com_example_idklol_MainActivity_stringFromJNIC(JNIEnv *env, jobject thiz) {
 
     double start, finish, start1, finish1;
     char buffer[250];
+    char temp[50];
 
     /* Time the following to compare performance
      */
@@ -84,14 +85,18 @@ Java_com_example_idklol_MainActivity_stringFromJNIC(JNIEnv *env, jobject thiz) {
     serial_primes(UPTO);        /* time it */
     finish = omp_get_wtime();
 
+    sprintf(buffer, "Serial and parallel prime number calculations:\n\n"
+                    "[serial] count = %ld, last = %ld (time = %f)\n",
+            count, lastprime, (finish - start));
+
     start1 = omp_get_wtime();
     openmp_primes(UPTO);        /* time it */
     finish1 = omp_get_wtime();
 
-    sprintf(buffer, "Serial and parallel prime number calculations:\n\n"
-            "[serial] count = %ld, last = %ld (time = %f)\n"
-            "[openmp] count = %ld, last = %ld (time = %f)\n",
-            count, lastprime, (finish - start), count, lastprime, (finish1 - start1));
+    sprintf(temp,"[openmp] count = %ld, last = %ld (time = %f)\n",
+           count, lastprime, (finish1 - start1));
+
+    strcat(buffer,temp);
 
     return (*env)->NewStringUTF(env, buffer);
 }
