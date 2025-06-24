@@ -1,3 +1,6 @@
+Hello, in this page you can find the source code for my Android Studio project that I used to make an Android application that uses OpenMP and OpenCL. I'm also going to provide a simple guide with the steps that I followed. For the latter you need a Snapdragon device with an Adreno GPU in order to run OpenCL.
+
+
 ## OpenMP
 
 - Go to File → New → New Project, scroll all the way down and select Native C++.
