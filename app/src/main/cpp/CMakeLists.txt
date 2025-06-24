@@ -29,11 +29,15 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         omp_primes.c
         omp_primes_using_lib.c
         omp_primes_gpu.c
-        ocl_test.c
-        primes_ocl_test.c
+        ocl_vector_add.c
+        ocl_primes.c
         omp_sum.c
         omp_vector_add.c
         omp_pi.c
+        ocl_image.c
+        ocl_pi.c
+        ocl_info.c
+        ocl_fibonacci.c
 )
 
 

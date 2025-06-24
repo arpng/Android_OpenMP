@@ -50,7 +50,7 @@ void openmp_primes(long int n) {
     */
 
 
-#pragma omp parallel for private(num, divisor, quotient, remainder) reduction(max: lastprime) reduction(+: count) num_threads(4) schedule(static)
+#pragma omp parallel for private(num, divisor, quotient, remainder) reduction(max: lastprime) reduction(+: count) num_threads(8) schedule(guided)
     for (i = 0; i < (n-1)/2; ++i) {    /* For every odd number */
         num = 2*i + 3;
 
@@ -77,7 +77,7 @@ Java_com_example_idklol_MainActivity_stringFromJNIC(JNIEnv *env, jobject thiz) {
 
     double start, finish, start1, finish1;
     char buffer[250];
-    char temp[50];
+    char temp[64];
 
     /* Time the following to compare performance
      */

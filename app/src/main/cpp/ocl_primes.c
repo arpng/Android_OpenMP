@@ -2,14 +2,30 @@
 // Created by aris on 13-May-25.
 //
 
-#include "primes_ocl_test.h"
+#include "ocl_primes.h"
+
+// Kernel source
+const char *programSourcePrimes =
+        "__kernel void serial_primes_parallel(const long n,"
+        " __global int* count, __global int* lastprime) {"
+        " int i = get_global_id(0);"
+        " if (i >= (n - 1) / 2) return;"
+        " long num = 2 * i + 3;"
+        " long divisor = 1, quotient, remainder;"
+        " do { divisor += 2;"
+        " quotient = num / divisor;"
+        " remainder = num % divisor;"
+        " } while (remainder && divisor <= quotient);"
+        " if (remainder || divisor == num) {"
+        " atomic_inc(count);"
+        " atomic_xchg(lastprime, (int)num);"
+        " }"
+        "}";
 
 JNIEXPORT jstring JNICALL
 Java_com_example_idklol_MainActivity_stringFromJNIPrimesOclTest(JNIEnv *env, jobject thiz) {
     const long n = 10000000; // You can make this dynamic if needed
-    const int batch_size = 50000;
-    const int total_work_items = (n - 1) / 2;
-    const int num_batches = (total_work_items + batch_size - 1) / batch_size;
+
 
     cl_platform_id platform;
     cl_device_id device;
@@ -19,23 +35,7 @@ Java_com_example_idklol_MainActivity_stringFromJNIPrimesOclTest(JNIEnv *env, job
     cl_context context = clCreateContext(NULL, 1, &device, NULL, NULL, NULL);
     cl_command_queue queue = clCreateCommandQueue(context, device, 0, NULL);
 
-    // Kernel source
-    const char *programSourcePrimes =
-            "__kernel void serial_primes_parallel(const long n,"
-            " __global int* count, __global int* lastprime, const int offset) {"
-            " int i = get_global_id(0) + offset;"
-            " if (i >= (n - 1) / 2) return;"
-            " long num = 2 * i + 3;"
-            " long divisor = 1, quotient, remainder;"
-            " do { divisor += 2;"
-            " quotient = num / divisor;"
-            " remainder = num % divisor;"
-            " } while (remainder && divisor <= quotient);"
-            " if (remainder || divisor == num) {"
-            " atomic_inc(count);"
-            " atomic_xchg(lastprime, (int)num);"
-            " }"
-            "}";
+
 
     cl_program program = clCreateProgramWithSource(context, 1, &programSourcePrimes, NULL, NULL);
     clBuildProgram(program, 1, &device, NULL, NULL, NULL);
@@ -49,24 +49,25 @@ Java_com_example_idklol_MainActivity_stringFromJNIPrimesOclTest(JNIEnv *env, job
     cl_mem lastprimeBuffer = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_COPY_HOST_PTR,
                                             sizeof(int), &initial_lastprime, NULL);
 
-    // Launch in batches
-    for (int batch = 0; batch < num_batches; ++batch) {
-        int offset = batch * batch_size;
-        int current_batch = batch_size;
-        if (offset + current_batch > total_work_items)
-            current_batch = total_work_items - offset;
 
-        clSetKernelArg(kernel, 0, sizeof(cl_long), &n);
-        clSetKernelArg(kernel, 1, sizeof(cl_mem), &countBuffer);
-        clSetKernelArg(kernel, 2, sizeof(cl_mem), &lastprimeBuffer);
-        clSetKernelArg(kernel, 3, sizeof(cl_int), &offset);
 
-        size_t globalSize = current_batch;
-        clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &globalSize, NULL, 0, NULL, NULL);
-    }
+    clSetKernelArg(kernel, 0, sizeof(cl_long), &n);
+    clSetKernelArg(kernel, 1, sizeof(cl_mem), &countBuffer);
+    clSetKernelArg(kernel, 2, sizeof(cl_mem), &lastprimeBuffer);
+
+    size_t globalSize = n;
+    size_t localSize = 1024;
+
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);  // Start time
+
+    clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &globalSize, &localSize, 0, NULL, NULL);
+
 
     // Wait for kernel completion
     clFinish(queue);
+
+    clock_gettime(CLOCK_MONOTONIC, &end);  // End time
 
     // Read results back to host
     int count, lastprime;
@@ -75,7 +76,7 @@ Java_com_example_idklol_MainActivity_stringFromJNIPrimesOclTest(JNIEnv *env, job
 
     // Format result
     char buffer[100];
-    snprintf(buffer, sizeof(buffer), "Count: %d\nLast Prime: %d\n", count, lastprime);
+    snprintf(buffer, sizeof(buffer), "Count: %d\nLast Prime: %d\n(time = %f)\n", count, lastprime, (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9);
 
     // Cleanup
     clReleaseMemObject(countBuffer);

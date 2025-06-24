@@ -12,7 +12,7 @@ void serial_pi(double* pi, double* W){
 void parallel_pi(double* pi, double* W){
     int i;
     double pi_value = *pi;
-    #pragma omp parallel for private(i) reduction(+:pi_value)
+    #pragma omp parallel for private(i) reduction(+:pi_value) num_threads(4) schedule(static)
     for (i=0; i < N; i++) {
         pi_value += 4 * *W / (1 + (i + 0.5) * (i + 0.5) * *W * *W);
     }

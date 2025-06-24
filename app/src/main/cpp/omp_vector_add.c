@@ -17,7 +17,7 @@ void serial_add_vectors(int* A, int* B, int* C){
 }
 
 void parallel_add_vectors(int* A, int* B, int* C){
-    #pragma omp parallel for num_threads(4) schedule(static)
+    #pragma omp parallel for num_threads(4) schedule(guided)
     for (int i = 0; i < VECTOR_SIZE; i++) {
         C[i] = A[i] + B[i];
     }
@@ -44,7 +44,7 @@ Java_com_example_idklol_MainActivity_stringFromJNIOmpVectorAdd(JNIEnv *env, jobj
 
     sprintf(buffer, "Serial and parallel vector addition\n\n[serial]    (time = %f)\n", (end1 - start1));
     for (int i = 0; i < 4; i++) {
-        sprintf(temp, "%d + %d = %d\n", A[VECTOR_SIZE*i], B[VECTOR_SIZE*i], C[VECTOR_SIZE*i]);
+        sprintf(temp, "%d + %d = %d\n", A[(VECTOR_SIZE/4)*i], B[(VECTOR_SIZE/4)*i], C[(VECTOR_SIZE/4)*i]);
         strcat(buffer, temp);
     }
 
@@ -57,7 +57,7 @@ Java_com_example_idklol_MainActivity_stringFromJNIOmpVectorAdd(JNIEnv *env, jobj
     sprintf(temp, "[openmp]\n    (time = %f)\n", (end2 - start2));
     strcat(buffer, temp);
     for (int i = 0; i < 4; i++) {
-        sprintf(temp, "%d + %d = %d\n", A[VECTOR_SIZE*i], B[VECTOR_SIZE*i], C[VECTOR_SIZE*i]);
+        sprintf(temp, "%d + %d = %d\n", A[(VECTOR_SIZE/4)*i], B[(VECTOR_SIZE/4)*i], C[(VECTOR_SIZE/4)*i]);
         strcat(buffer, temp);
     }
 

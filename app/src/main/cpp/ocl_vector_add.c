@@ -2,7 +2,7 @@
 // Created by aris on 15-Oct-24.
 //
 
-#include "ocl_test.h"
+#include "ocl_vector_add.h"
 
 
 // OpenCL kernel for vector addition
@@ -13,14 +13,14 @@ const char* programSource =
         "}";
 
 JNIEXPORT jstring JNICALL
-Java_com_example_idklol_MainActivity_stringFromJNIOclTest(JNIEnv *env, jobject thiz) {
+Java_com_example_idklol_MainActivity_stringFromJNIOpenCLVectorAdd(JNIEnv *env, jobject thiz) {
     // Allocate memory for vectors A, B, and C on the host
     int *A = (int*) malloc(sizeof(int) * VECTOR_SIZE);
     int *B = (int*) malloc(sizeof(int) * VECTOR_SIZE);
     int *C = (int*) malloc(sizeof(int) * VECTOR_SIZE);
 
-    char buffer[250];
-    char temp[20];
+    char buffer[512];
+    char temp[256];
 
     // Initialize vectors A and B
     for (int i = 0; i < VECTOR_SIZE; i++) {
@@ -34,14 +34,14 @@ Java_com_example_idklol_MainActivity_stringFromJNIOclTest(JNIEnv *env, jobject t
     clGetPlatformIDs(1, &platform, NULL);
     clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 1, &device, NULL);
 
-    // Print device name, should be qualcomm adreno
-    char device_name[25];
-    char device_name2[40];
-    clGetDeviceInfo(device, CL_DEVICE_NAME, sizeof(device_name), device_name, NULL);
+//    // Print device name, should be qualcomm adreno
+//    char device_name[25];
+//    char device_name2[40];
+//    clGetDeviceInfo(device, CL_DEVICE_NAME, sizeof(device_name), device_name, NULL);
 //    printf("Device name: %s\n", device_name);
-    __android_log_print(ANDROID_LOG_INFO, "ANDROID_LOG_TAG", "Device name: %s\n", device_name);
-    sprintf(device_name2, "Device name: %s\n", device_name);
-    strcat(buffer, device_name2);
+//    __android_log_print(ANDROID_LOG_INFO, "ANDROID_LOG_TAG", "Device name: %s\n", device_name);
+//    sprintf(device_name2, "Device name: %s\n", device_name);
+//    strcat(buffer, device_name2);
 
     // Create an OpenCL context and command queue
     cl_context context = clCreateContext(NULL, 1, &device, NULL, NULL, NULL);
@@ -70,16 +70,29 @@ Java_com_example_idklol_MainActivity_stringFromJNIOclTest(JNIEnv *env, jobject t
 
     // Execute the kernel
     size_t globalSize = VECTOR_SIZE;
-    clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &globalSize, NULL, 0, NULL, NULL);
+    size_t localSize = 256;
+
+    struct timespec start, end;
+    clock_gettime(CLOCK_MONOTONIC, &start);  // Start time
+
+    clEnqueueNDRangeKernel(queue, kernel, 1, NULL, &globalSize, &localSize, 0, NULL, NULL);
+    clFinish(queue); // Ensure all commands complete
+
+    clock_gettime(CLOCK_MONOTONIC, &end);  // End time
 
     // Read the result vector C back to the host
+    clEnqueueReadBuffer(queue, bufferA, CL_TRUE, 0, VECTOR_SIZE * sizeof(int), A, 0, NULL, NULL);
+    clEnqueueReadBuffer(queue, bufferB, CL_TRUE, 0, VECTOR_SIZE * sizeof(int), B, 0, NULL, NULL);
     clEnqueueReadBuffer(queue, bufferC, CL_TRUE, 0, VECTOR_SIZE * sizeof(int), C, 0, NULL, NULL);
 
     // Display the result
-    for (int i = 0; i < VECTOR_SIZE; i++) {
-        sprintf(temp, "%d + %d = %d\n", A[i], B[i], C[i]);
+    for (int i = 0; i < 4; i++) {
+        sprintf(temp, "%d + %d = %d\n", A[(VECTOR_SIZE/4)*i], B[(VECTOR_SIZE/4)*i], C[(VECTOR_SIZE/4)*i]);
         strcat(buffer, temp);  // Concatenate temp to big_buffer
     }
+
+    sprintf(temp, "localSize = %zu [work-items(threads) per work group] (time = %f)\n", localSize, (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9);
+    strcat(buffer, temp);  // Concatenate temp to big_buffer
 
     // Clean up
     clReleaseMemObject(bufferA);

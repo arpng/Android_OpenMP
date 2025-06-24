@@ -11,6 +11,6 @@
 #include <string.h>
 #include <android/log.h>
 
-#define VECTOR_SIZE 33554432  // Set as appropriate 2^25
+#define VECTOR_SIZE 100000000  // Set as appropriate 2^25
 
 #endif //IDKLOL_OMP_VECTOR_ADD_H
