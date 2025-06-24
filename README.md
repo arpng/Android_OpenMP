@@ -12,15 +12,15 @@ Hello, in this page you can find the source code for my Android Studio project t
 - Place your OpenMP C code inside this file. In order to make the link with the Java code from MainActivity.java (~cpp/java/com.example.[project name]) you need 3 things:
   - Import jni.h .
   - Your “main” function in your C code should have this signature:\
-  `JNIEXPORT jstring JNICALL Java_com_example_[project name]_MainActivity_stringFromJNI(JNIEnv *env, jobject thiz)`
-  - Android studio might shorten it with a grey box to:\
-  `JNIEXPORT jstring JNICALL MainActivity.stringFromJNI(JNIEnv *env, jobject thiz)`
-  - If you click on the gray box it will show you the full name.
+  `JNIEXPORT jstring JNICALL Java_com_example_[project name]_MainActivity_stringFromJNI(JNIEnv *env, jobject thiz)`\
+    Android studio might shorten it with a grey box to:\
+  `JNIEXPORT jstring JNICALL MainActivity.stringFromJNI(JNIEnv *env, jobject thiz)`\
+    If you click on the gray box it will show you the full name.
   - What you return should be a Java string given that in MainActivity.java the function stringFromJNI returns a string. Since you are working on C code you need to convert it by returning the following in your MainActivity.stringFromJNI (your “main” C function).
   `return (*env)->NewStringUTF(env, buffer);`
 - Go to CMakeLists.txt located in the cpp folder.
   - In the `add_library` section make sure that the file name is changed to native-lib.c (should be done automatically after renaming).
-  - Add `find_package(OpenMP REQUIRED)` under the `add_library section`.
+  - Add `find_package(OpenMP REQUIRED)` under the `add_library` section.
   - Finally in `target_link_libraries` add `OpenMP::OpenMP_C`.
 - Click on the green play button at the top and Voila! your OpenMP code should be running on your device.
 
