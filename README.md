@@ -4,10 +4,10 @@ Hello, in this page you can find the source code for my Android Studio project t
 ## OpenMP
 
 - Go to File → New → New Project, scroll all the way down and select Native C++.
-- Give a desired name and save location to your project. I used Java and my Minimum SDK was API 30 (“R”; Android 11). Build configuration language was Kotlin DSL.
+- Give your desired name and save location for your project. I used Java and my Minimum SDK was API 30 (“R”; Android 11). Build configuration language was Kotlin DSL.
 - Hit Next, leave C++ standard at Toolchain Default and click on Finish.
 - Once you create your project you should see a small popup on the bottom right of your screen about some Microsoft Defender configuration just click on “Automatically” and accept the user prompt that follows.
-- I prefer using the “Project” view in the file tree window located in the left of Android Studio's UI, between the sidebar far left and the file editor. Default view is “Android” so just change it from the drop down menu if you want.
+- I prefer using the “Project” view in the file tree window located in the left of Android Studio's UI, between the sidebar far left and the file editor. Default view is “Android” so just change it from the drop-down menu if you want.
 - Locate the native-lib.cpp file under “[project name]\app\src\main\cpp” in the file tree window and rename it to native-lib.c (right click on it → Refactor → Rename).
 - Place your OpenMP C code inside this file. In order to make the link with the Java code from MainActivity.java (~cpp/java/com.example.[project name]) you need 3 things:
   - Import jni.h .
