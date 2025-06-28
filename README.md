@@ -1,23 +1,26 @@
+Hello, in this page you can find the source code for my Android Studio project that I used to make an Android application that uses OpenMP and OpenCL. I'm also going to provide a simple guide with the steps that I followed. For the latter you need a Snapdragon device with an Adreno GPU in order to run OpenCL.
+
+
 ## OpenMP
 
 - Go to File → New → New Project, scroll all the way down and select Native C++.
-- Give a desired name and save location to your project. I used Java and my Minimum SDK was API 30(“R”; Android 11). Build configuration language was Kotlin DSL.
+- Give your desired name and save location for your project. I used Java and my Minimum SDK was API 30 (“R”; Android 11). Build configuration language was Kotlin DSL.
 - Hit Next, leave C++ standard at Toolchain Default and click on Finish.
 - Once you create your project you should see a small popup on the bottom right of your screen about some Microsoft Defender configuration just click on “Automatically” and accept the user prompt that follows.
-- I prefer using the “Project” view in the file tree window located in the left of Android Studio's UI, between the sidebar far left and the file editor. Default view is “Android” so just change it from the drop down menu if you want.
-- Locate the native-lib.cpp file under “[project name]\app\src\main\cpp” in the file tree window and rename it to native-lib.c(right click on it → Refactor → Rename).
-- Place your OpenMP C code inside this file. In order to make the link with the Java code from MainActivity.java(~cpp/java/com.example.[project name]) you need 3 things:
+- I prefer using the “Project” view in the file tree window located in the left of Android Studio's UI, between the sidebar far left and the file editor. Default view is “Android” so just change it from the drop-down menu if you want.
+- Locate the native-lib.cpp file under “[project name]\app\src\main\cpp” in the file tree window and rename it to native-lib.c (right click on it → Refactor → Rename).
+- Place your OpenMP C code inside this file. In order to make the link with the Java code from MainActivity.java (~cpp/java/com.example.[project name]) you need 3 things:
   - Import jni.h .
-  - Your “main” function in your C code should have this signature:
-  > JNIEXPORT jstring JNICALL Java_com_example_[project name]_MainActivity_stringFromJNI(JNIEnv *env, jobject thiz)
-  - Android studio might shorten it with a grey box to:
-  > JNIEXPORT jstring JNICALL MainActivity.stringFromJNI(JNIEnv *env, jobject thiz)
-  - If you click on the gray box it will show you the full name.
-  - What you return should be a Java string given that in MainActivity.java the function stringFromJNI returns a string. Since you are working on C code you need to convert it by returning the following in your MainActivity.stringFromJNI(your “main” C function).
-  > return (*env)->NewStringUTF(env, buffer);
+  - Your “main” function in your C code should have this signature:\
+  `JNIEXPORT jstring JNICALL Java_com_example_[project name]_MainActivity_stringFromJNI(JNIEnv *env, jobject thiz)`\
+    Android studio might shorten it with a grey box to:\
+  `JNIEXPORT jstring JNICALL MainActivity.stringFromJNI(JNIEnv *env, jobject thiz)`\
+    If you click on the gray box it will show you the full name.
+  - What you return should be a Java string given that in MainActivity.java the function stringFromJNI returns a string. Since you are working on C code you need to convert it by returning the following in your MainActivity.stringFromJNI (your “main” C function).
+  `return (*env)->NewStringUTF(env, buffer);`
 - Go to CMakeLists.txt located in the cpp folder.
-  - In the `add_library` section make sure that the file name is changed to native-lib.c(should be done automatically after renaming).
-  - Add `find_package(OpenMP REQUIRED)` under the `add_library section`.
+  - In the `add_library` section make sure that the file name is changed to native-lib.c (should be done automatically after renaming).
+  - Add `find_package(OpenMP REQUIRED)` under the `add_library` section.
   - Finally in `target_link_libraries` add `OpenMP::OpenMP_C`.
 - Click on the green play button at the top and Voila! your OpenMP code should be running on your device.
 
@@ -28,7 +31,7 @@
 
 ## OpenCL
 - Create a Qualcomm account and download the OpenCL SDK from this link: https://qpm.qualcomm.com/#/main/tools/details/Adreno_OpenCL_SDK
-- Create a C file inside cpp folder with your OpenCL code and then in MainActivity.java add a declaration of a Java function that will link to your C code(as explained before).
+- Create a C file inside cpp folder with your OpenCL code and then in MainActivity.java add a declaration of a Java function that will link to your C code (as explained before).
 - Go to CMakeLists.txt located in the cpp folder.
   - In the `add_library` section add your file containing your OpenCL code.
   - Add `find_package(OpenCL REQUIRED)` under the `add_library` section.
