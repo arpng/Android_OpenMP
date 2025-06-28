@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Create the first TextView
         TextView textView1 = new TextView(this);
-//        textView1.setText(stringFromJNIC());
+        textView1.setText(stringFromJNIC());
         textView1.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the second TextView
         TextView textView2 = new TextView(this);
 //        textView2.setText(stringFromJNIOclTest());
-//        textView2.setText(stringFromJNIOmpPi());
+        textView2.setText(stringFromJNIOmpPi());
         textView2.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView3 = new TextView(this);
 //        textView3.setText(stringFromJNICGPU());
 //        textView3.setText(stringFromJNICLib());
-//        textView3.setText(stringFromJNIOpenClInfo());
+        textView3.setText(stringFromJNIOpenClInfo());
         textView3.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textView4 = new TextView(this);
 //        NativeLib obj = new NativeLib();
 //        textView4.setText(obj.stringFromJNILib());
-//        textView4.setText(stringFromJNIOpenCLVectorAdd());
+        textView4.setText(stringFromJNIOpenCLVectorAdd());
         textView4.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 //            Toast.makeText(this, "File not found in Downloads!", Toast.LENGTH_LONG).show();
 //        }
 //        textView5.setText(stringFromJNIOpenClPi());
-        textView5.setText(stringFromJNIOpenClInfo());
+//        textView5.setText(stringFromJNIOpenClInfo());
         textView5.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
